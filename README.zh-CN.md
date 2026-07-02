@@ -17,6 +17,10 @@ HarnessWeaver 是一个可复用的 Codex harness engineering 模板，用于在
 
 HarnessWeaver 不是应用框架。它不会替你选择前端、后端、数据库、部署方式或 AI provider。它提供的是一套可复用的“项目操作系统”，帮助人和 Codex 更稳地做这些决策。
 
+## 适合谁？
+
+HarnessWeaver 面向使用 Codex 等 AI coding agents 的开发者、研究者和构建者，适合想用 PRD、小任务、验证和人工 review 建立可重复项目 workflow 的人。
+
 ## 推荐使用场景
 
 HarnessWeaver 适合：

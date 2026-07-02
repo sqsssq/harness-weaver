@@ -2,9 +2,15 @@
 
 All notable HarnessWeaver template changes should be recorded here.
 
-This project follows semantic versioning once tagged releases begin. Until then, keep new work under `Unreleased`.
+This project follows semantic versioning. Keep new work under `Unreleased` until the next release is cut.
 
 ## Unreleased
+
+- No unreleased changes yet.
+
+## v0.1.0 - 2026-07-02
+
+Initial HarnessWeaver template.
 
 ### Added
 

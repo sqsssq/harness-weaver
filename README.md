@@ -8,6 +8,10 @@ It helps new projects start with a stable `AGENTS.md` entry point, PRD-first pla
 
 HarnessWeaver is not an application framework. It does not choose your frontend stack, backend, database, deployment model, or AI provider. It gives Codex and humans a reusable operating system for making those choices deliberately.
 
+## Who Is This For?
+
+HarnessWeaver is designed for developers, researchers, and builders who use AI coding agents such as Codex and want a repeatable project workflow based on PRDs, small tasks, verification, and human review.
+
 ## Recommended Use Cases
 
 HarnessWeaver is suitable for:
