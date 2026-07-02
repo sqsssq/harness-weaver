@@ -8,6 +8,32 @@ It helps new projects start with a stable `AGENTS.md` entry point, PRD-first pla
 
 HarnessWeaver is not an application framework. It does not choose your frontend stack, backend, database, deployment model, or AI provider. It gives Codex and humans a reusable operating system for making those choices deliberately.
 
+## Recommended Use Cases
+
+HarnessWeaver is suitable for:
+
+- AI-assisted software prototypes.
+- Research software projects.
+- Education technology demos.
+- Product MVPs.
+- Existing repositories that need a PRD-first Codex workflow.
+
+It is less suitable for:
+
+- One-off scripts.
+- Tiny repositories that do not need PRD or task tracking.
+- Projects that already have a mature engineering process.
+
+## Quick Start
+
+```bash
+cp config/init-project.example.env init-project.env
+bash scripts/init-project.sh --config init-project.env --dry-run
+bash scripts/init-project.sh --config init-project.env
+bash scripts/verify.sh --instance
+bash scripts/verify.sh --strict-instance
+```
+
 ## How To Use
 
 1. Copy this template into a new project.
@@ -59,6 +85,8 @@ For project-specific UI and experience standards, fill in `docs/design.md` befor
 
 Keep generic workflow separate from project-specific rules.
 
+- `AGENTS.md`: HarnessWeaver repository maintenance rules.
+- `templates/base/AGENTS.md`: generated-project `AGENTS.md` template.
 - `docs/meta/`: reusable Codex workflow.
 - `docs/harness/`: reusable harness engineering structure.
 - `docs/domain/`: project-specific guardrails.
@@ -70,7 +98,7 @@ Template changes are tracked in `CHANGELOG.md`. Existing projects can use `docs/
 
 ## Optional Codex Skill
 
-This repository includes an optional Codex skill at `skills/harnessweaver-init/` for initializing HarnessWeaver-based projects. The skill is part of this repo, but it is not required in projects created from the template.
+This repository includes an optional Codex skill at `skills/harness-weaver/` for initializing HarnessWeaver-based projects. The skill is part of this repo, but it is not required in projects created from the template.
 
 ## Verification Modes
 

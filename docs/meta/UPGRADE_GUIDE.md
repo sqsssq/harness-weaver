@@ -15,11 +15,13 @@ Use this guide when an existing project based on HarnessWeaver wants to absorb n
 2. Identify reusable files that changed, such as:
    - `scripts/verify.sh`
    - `scripts/init-project.sh`
+   - `templates/base/AGENTS.md`
    - `docs/meta/`
    - `docs/harness/`
    - `config/init-project.example.env`
 3. Identify project-specific files that need manual merge, such as:
-   - `AGENTS.md`
+   - root `AGENTS.md`
+   - generated-project `templates/base/AGENTS.md`
    - `docs/domain/PROJECT_RULES.md`
    - `docs/design.md`
    - `docs/prd/`

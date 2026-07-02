@@ -2,7 +2,9 @@
 
 ## Framework Acceptance Criteria
 
-- `AGENTS.md` is the stable Codex entry point.
+- Root `AGENTS.md` is the stable Codex entry point for maintaining HarnessWeaver.
+- `templates/base/AGENTS.md` is the generated-project Codex entry point template.
+- `LICENSE` defines public reuse terms.
 - `docs/prd/` describes product direction and MVP boundaries.
 - `docs/meta/` describes reusable AI development workflow.
 - `docs/harness/` describes harness maturity, sensors, and failure patterns.

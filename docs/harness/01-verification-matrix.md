@@ -6,6 +6,8 @@
 | --- | --- |
 | Required files exist | `bash scripts/verify.sh` |
 | Paths are internally consistent | Markdown path reference check in `scripts/verify.sh` |
+| Repo and generated-project agent entry points are separated | root `AGENTS.md` plus `templates/base/AGENTS.md` |
+| Open-source license exists | `LICENSE` is required by `bash scripts/verify.sh` |
 | No source-project-specific terms remain | source-term search |
 | Template placeholders are handled correctly | `--template` allows placeholders; `--instance` rejects them |
 | Implementation readiness can be checked | `--strict-instance` rejects placeholders and unresolved TODO markers |

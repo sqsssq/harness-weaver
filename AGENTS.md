@@ -1,91 +1,70 @@
 # AGENTS.md
 
-`{PROJECT_NAME}` uses a PRD-first, task-based, harness-oriented AI development workflow with Codex.
+HarnessWeaver is a reusable Codex harness engineering template and optional skill for initializing PRD-first, task-based AI-assisted development projects.
 
-Replace placeholder values before using this template in a real project.
+This repository develops the HarnessWeaver template itself. Do not treat the root `AGENTS.md` as the file copied into generated projects. The generated-project version lives at `templates/base/AGENTS.md`.
 
 ## Project Context
 
-- Project name: `{PROJECT_NAME}`
-- Domain: `{DOMAIN}`
-- Primary user: `{PRIMARY_USER}`
-- Current MVP focus: `{MVP_FOCUS}`
-- Explicit non-goals: `{NON_GOALS}`
-
-Do not treat this project as a generic app. Read `docs/domain/PROJECT_RULES.md` for project-specific quality rules and failure modes.
-
-## Core Workflow
-
-```text
-Idea / PRD
--> Task breakdown
--> Implement one small task
--> Run verification
--> Review diff
--> Human handoff
--> Human approval
--> Commit only after approval
-```
-
-## Workflow Modules
-
-| Situation | Required Guide |
-| --- | --- |
-| User gives a vague product idea | `docs/meta/PRD_GENERATOR.md` |
-| User asks to split PRD into tasks | `docs/meta/TASK_BREAKDOWN_GUIDE.md` |
-| User asks to implement a task | `docs/meta/TASK_EXECUTION_GUIDE.md` |
-| User changes or expands scope | `docs/meta/CHANGE_REQUEST_GUIDE.md` |
-| User asks to verify implementation | `docs/meta/VERIFICATION_GUIDE.md` |
-| User asks to review changed diff | `docs/meta/DIFF_REVIEW_GUIDE.md` |
-| User asks for review-ready summary | `docs/meta/HUMAN_HANDOFF_GUIDE.md` |
-| User approves and asks to commit | `docs/meta/COMMIT_GUIDE.md` |
+- Project name: `HarnessWeaver`
+- Domain: reusable Codex harness engineering templates
+- Primary user: project creators who want PRD-first, task-based AI-assisted development
+- Current MVP focus: reusable project initialization, strict readiness verification, and optional Codex skill support
+- Explicit non-goals: choosing an application stack, generating product code by default, or replacing project-specific human review
 
 ## Repository Map
 
 ```text
-docs/prd/       product direction and MVP boundaries
-docs/tasks/     small implementation tasks
-docs/meta/      reusable AI development workflow
-docs/harness/   harness maturity, sensors, and failure patterns
-docs/domain/    project-specific guardrails
-docs/design.md  project-specific design standards
-config/         initialization config examples
-scripts/        verification entry points
+AGENTS.md                 HarnessWeaver repo maintenance rules
+templates/base/AGENTS.md  generated-project AGENTS.md template
+config/                   initialization config examples
+docs/meta/                reusable Codex workflow
+docs/harness/             harness maturity, sensors, and failure patterns
+docs/domain/              project-specific guardrail template
+docs/design.md            project-specific design standards template
+docs/prd/                 product direction and MVP boundary templates
+docs/tasks/               task workflow templates
+scripts/                  verification and initialization entry points
+skills/                   optional Codex skills for HarnessWeaver workflows
 ```
 
 ## Working Agreements
 
-- Keep the MVP focused on `{MVP_FOCUS}`.
-- Keep project-specific quality rules in `docs/domain/PROJECT_RULES.md`.
-- Keep project-specific design standards in `docs/design.md`.
-- Implement one small complete task at a time.
-- Track task status using `docs/tasks/README.md`; do not call work done just because implementation is complete.
-- Every task must have acceptance criteria and a verification method.
-- If a task changes product behavior, update the relevant PRD or decision log in the same change set.
-- If a user request changes scope, classify it with `docs/meta/CHANGE_REQUEST_GUIDE.md` before absorbing it into the current task.
-- Run available verification before handoff.
-- Do not commit without human approval.
-- After the user approves a change or asks to commit, commit the relevant verified change set and push it to the current remote branch unless the user explicitly says not to push.
+- Keep generated-project template files generic and placeholder-driven.
+- Keep HarnessWeaver repo maintenance rules in this root `AGENTS.md`.
+- Keep generated-project rules in `templates/base/AGENTS.md` and copied template docs.
+- Do not add real project task files to `docs/tasks/`; keep only reusable task workflow templates.
+- Do not add product application code to this repository.
+- Run `bash scripts/verify.sh --template` before handoff.
+- For reuse changes, test a copied project with `--instance` and `--strict-instance`.
+- Commit and push only after the relevant verification passes and the user has approved or requested it.
 
-## Before Implementation
+## Before Template Changes
 
-Before implementing a task, the agent must:
+Before changing the template, read:
 
-1. Read the relevant task file in `docs/tasks/`.
-2. Read the PRD files referenced by the task.
-3. Read relevant domain rules in `docs/domain/`.
-4. Read relevant design standards in `docs/design.md` when UI or experience is affected.
-5. Read relevant harness rules in `docs/harness/`.
-6. Restate the task scope.
-7. Confirm what is out of scope.
-8. Implement the smallest complete slice.
+1. `README.md`
+2. `docs/domain/PROJECT_RULES.md`
+3. Relevant files under `docs/harness/`
+4. Relevant files under `docs/meta/`
+5. `templates/base/AGENTS.md` when generated-project behavior is affected
+6. `skills/harness-weaver/SKILL.md` when skill behavior is affected
 
 ## Verification
 
-Prefer using:
+Prefer:
 
 ```bash
-bash scripts/verify.sh
+bash scripts/verify.sh --template
 ```
 
-Do not claim verification passed unless it actually ran or the relevant acceptance criteria were manually checked.
+For initialization or generated-project changes, also copy the template to a temporary project and run:
+
+```bash
+bash scripts/init-project.sh --config init-project.env --dry-run
+bash scripts/init-project.sh --config init-project.env
+bash scripts/verify.sh --instance
+bash scripts/verify.sh --strict-instance
+```
+
+Do not claim verification passed unless it actually ran.

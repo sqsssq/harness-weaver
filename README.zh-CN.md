@@ -17,6 +17,32 @@ HarnessWeaver 是一个可复用的 Codex harness engineering 模板，用于在
 
 HarnessWeaver 不是应用框架。它不会替你选择前端、后端、数据库、部署方式或 AI provider。它提供的是一套可复用的“项目操作系统”，帮助人和 Codex 更稳地做这些决策。
 
+## 推荐使用场景
+
+HarnessWeaver 适合：
+
+- AI-assisted software prototypes；
+- research software projects；
+- education technology demos；
+- product MVPs；
+- 需要 PRD-first Codex workflow 的已有仓库。
+
+不太适合：
+
+- 一次性脚本；
+- 不需要 PRD 或任务跟踪的小仓库；
+- 已经有成熟工程流程的项目。
+
+## 快速开始
+
+```bash
+cp config/init-project.example.env init-project.env
+bash scripts/init-project.sh --config init-project.env --dry-run
+bash scripts/init-project.sh --config init-project.env
+bash scripts/verify.sh --instance
+bash scripts/verify.sh --strict-instance
+```
+
 ## 如何使用
 
 1. 把这个模板复制到新项目中。
@@ -96,6 +122,8 @@ HarnessWeaver 把 harness 分成 5 个阶段。项目不需要一开始完成所
 
 把通用流程和项目专属规则分开：
 
+- `AGENTS.md`：HarnessWeaver 仓库自身维护规则；
+- `templates/base/AGENTS.md`：生成给目标项目的 `AGENTS.md` 模板；
 - `docs/meta/`：通用 Codex workflow；
 - `docs/harness/`：通用 harness engineering 结构；
 - `docs/domain/`：项目专属 guardrails；
@@ -107,7 +135,7 @@ HarnessWeaver 把 harness 分成 5 个阶段。项目不需要一开始完成所
 
 ## 可选 Codex Skill
 
-本仓库包含一个可选 Codex skill：`skills/harnessweaver-init/`，用于初始化基于 HarnessWeaver 的项目。这个 skill 属于本仓库配套能力，但新项目不必须复制它。
+本仓库包含一个可选 Codex skill：`skills/harness-weaver/`，用于初始化基于 HarnessWeaver 的项目。这个 skill 属于本仓库配套能力，但新项目不必须复制它。
 
 ## 验证模式
 

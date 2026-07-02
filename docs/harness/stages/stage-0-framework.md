@@ -16,6 +16,8 @@ Start Stage 0 when:
 ## Required Artifacts
 
 - `AGENTS.md`
+- `templates/base/AGENTS.md`
+- `LICENSE`
 - `README.md`
 - `docs/prd/`
 - `docs/tasks/README.md`
@@ -30,7 +32,9 @@ Start Stage 0 when:
 
 ## Completion Checklist
 
-- [ ] `AGENTS.md` points to existing workflow docs.
+- [ ] Root `AGENTS.md` describes HarnessWeaver repo maintenance.
+- [ ] `templates/base/AGENTS.md` defines generated-project agent behavior.
+- [ ] `LICENSE` defines public reuse terms.
 - [ ] PRD files describe product direction and MVP boundaries.
 - [ ] Task workflow defines status lifecycle and task template.
 - [ ] Meta docs describe PRD generation, task breakdown, execution, change requests, verification, diff review, handoff, and commit.

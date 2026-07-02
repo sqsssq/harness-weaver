@@ -1,0 +1,4 @@
+interface:
+  display_name: "HarnessWeaver"
+  short_description: "Initialize and verify HarnessWeaver projects"
+  default_prompt: "Use $harness-weaver to initialize a new project from the HarnessWeaver template."

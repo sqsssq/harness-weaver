@@ -1,13 +1,13 @@
 ---
-name: harnessweaver-init
-description: Initialize and validate new projects from the HarnessWeaver template. Use when the user asks to create, scaffold, copy, bootstrap, initialize, rehearse, reuse, or verify a HarnessWeaver-based project; asks in Chinese to 创建、初始化、复用、演练、验证 HarnessWeaver 模板项目; generate or review init-project.env; run init-project.sh; run --template, --instance, or --strict-instance verification; or prepare a handoff for HarnessWeaver project initialization. Do not use for generic project scaffolding unrelated to HarnessWeaver.
+name: harness-weaver
+description: Initialize, validate, audit, or upgrade projects that use the HarnessWeaver template. Use when the user asks to create, scaffold, copy, bootstrap, initialize, rehearse, reuse, verify, audit, or upgrade a HarnessWeaver-based project; asks in Chinese to 创建、初始化、复用、演练、验证、审计、升级 HarnessWeaver 模板项目; generate or review init-project.env; run init-project.sh; run --template, --instance, or --strict-instance verification; or prepare a handoff for HarnessWeaver project initialization. Do not use for generic project scaffolding unrelated to HarnessWeaver.
 ---
 
-# HarnessWeaver Init
+# HarnessWeaver
 
 ## Overview
 
-Use this skill to create or validate a project from the HarnessWeaver template. Keep the workflow focused on scaffold initialization and verification; do not generate product code, create PRDs beyond the initialization config, or commit the target project unless the user explicitly asks.
+Use this skill to initialize, validate, audit, or upgrade a project from the HarnessWeaver template. Keep the workflow focused on scaffold and harness operations; do not generate product code, create PRDs beyond the initialization config, or commit the target project unless the user explicitly asks.
 
 For design rationale and scope boundaries, see `references/skill-brief.md` when planning or updating this skill.
 

@@ -8,6 +8,8 @@ The harness is a planning and verification layer for AI-assisted development. It
 
 - `AGENTS.md`
 - `CHANGELOG.md`
+- `LICENSE`
+- `templates/base/AGENTS.md`
 - `docs/prd/`
 - `docs/meta/`
 - `docs/domain/PROJECT_RULES.md`

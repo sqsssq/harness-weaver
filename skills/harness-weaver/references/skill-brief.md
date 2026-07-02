@@ -1,8 +1,8 @@
-# HarnessWeaver Init Skill Brief
+# HarnessWeaver Skill Brief
 
 ## Goal
 
-Help Codex initialize a clean HarnessWeaver-based project from the template repo, using the config-based initialization path and strict verification gates.
+Help Codex initialize, validate, audit, or upgrade a clean HarnessWeaver-based project from the template repo, using the config-based initialization path and strict verification gates.
 
 ## Target User
 

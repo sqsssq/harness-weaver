@@ -47,9 +47,11 @@ required_files=(
   "AGENTS.md"
   ".gitignore"
   "CHANGELOG.md"
+  "LICENSE"
   "README.md"
   "README.zh-CN.md"
   "config/init-project.example.env"
+  "templates/base/AGENTS.md"
   "docs/design.md"
   "docs/domain/PROJECT_RULES.md"
   "docs/prd/00-product-brief.md"
@@ -103,7 +105,7 @@ fi
 echo "Required template files exist."
 
 source_terms="BioQues[t]|QuestLa[b]|QuestWeave[r]|R[B]M|P[r]oposal Analytic[s]|P[S] recommendation"
-if grep -R -n -E "$source_terms" AGENTS.md README.md README.zh-CN.md config docs scripts; then
+if grep -R -n -E "$source_terms" AGENTS.md README.md README.zh-CN.md config docs scripts templates; then
   echo "Found source-project-specific terms. Please review the matches above."
   exit 1
 fi
@@ -121,19 +123,19 @@ echo "Required scripts are executable."
 
 placeholder_pattern='\{[A-Z][A-Z0-9_]*\}'
 if [[ "$mode" == "instance" || "$mode" == "strict-instance" ]]; then
-  if grep -R -n -E "$placeholder_pattern" AGENTS.md README.md README.zh-CN.md docs; then
+  if grep -R -n -E "$placeholder_pattern" AGENTS.md README.md README.zh-CN.md docs templates; then
     echo "Instance mode does not allow unresolved placeholder tokens."
     exit 1
   fi
   echo "No unresolved placeholder tokens found."
 else
-  placeholder_count=$(grep -R -h -E -o "$placeholder_pattern" AGENTS.md README.md README.zh-CN.md docs | wc -l | tr -d ' ')
+  placeholder_count=$(grep -R -h -E -o "$placeholder_pattern" AGENTS.md README.md README.zh-CN.md docs templates | wc -l | tr -d ' ')
   echo "Template placeholder tokens allowed: $placeholder_count found."
 fi
 
 if [[ "$mode" == "strict-instance" ]]; then
   todo_matches="$(mktemp)"
-  if grep -R -n -E 'TODO:' AGENTS.md README.md README.zh-CN.md docs > "$todo_matches"; then
+  if grep -R -n -E 'TODO:' AGENTS.md README.md README.zh-CN.md docs templates > "$todo_matches"; then
     cat "$todo_matches"
     echo
     echo "Strict instance TODO summary:"
@@ -165,7 +167,7 @@ while IFS= read -r ref; do
     fi
   fi
 done < <(
-  grep -R -h -E -o '`(AGENTS\.md|README[^`]*\.md|config/[^`]+|docs/[^`]+|scripts/[^`]+)`' AGENTS.md README.md README.zh-CN.md docs |
+  grep -R -h -E -o '`(AGENTS\.md|README[^`]*\.md|config/[^`]+|docs/[^`]+|scripts/[^`]+|templates/[^`]+)`' AGENTS.md README.md README.zh-CN.md docs templates |
     sed 's/^`//; s/`$//' |
     sort -u
 )

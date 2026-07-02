@@ -58,7 +58,7 @@ Project summary: $project_summary
 Generic failure mode: $generic_failure_mode
 Primary user goal: $primary_user_goal
 
-Run without --dry-run to replace placeholders in AGENTS.md, README.md, README.zh-CN.md, and docs/*.md.
+Run without --dry-run to replace placeholders in templates/base/AGENTS.md, README.md, README.zh-CN.md, and docs/*.md.
 EOF
 }
 
@@ -367,7 +367,7 @@ export HW_PRIMARY_USER_GOAL="$primary_user_goal"
 export HW_CONTENT_REVIEW_STATUS_RULE="$content_review_status_rule"
 export HW_FEEDBACK_REASONING_RULE="$feedback_reasoning_rule"
 
-find AGENTS.md README.md README.zh-CN.md docs -type f -name '*.md' -print0 |
+find templates/base README.md README.zh-CN.md docs -type f -name '*.md' -print0 |
   xargs -0 perl -0pi -e '
     s/\{PROJECT_NAME\}/$ENV{HW_PROJECT_NAME}/g;
     s/\{DOMAIN\}/$ENV{HW_DOMAIN}/g;
@@ -418,6 +418,8 @@ find AGENTS.md README.md README.zh-CN.md docs -type f -name '*.md' -print0 |
     s/\{CONTENT_REVIEW_STATUS_RULE\}/$ENV{HW_CONTENT_REVIEW_STATUS_RULE}/g;
     s/\{FEEDBACK_REASONING_RULE\}/$ENV{HW_FEEDBACK_REASONING_RULE}/g;
   '
+
+cp templates/base/AGENTS.md AGENTS.md
 
 echo "Replaced common HarnessWeaver placeholders."
 echo "Next: run bash scripts/verify.sh --instance."
