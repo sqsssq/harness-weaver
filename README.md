@@ -1,12 +1,29 @@
+<div align="center">
+
 # HarnessWeaver
 
-English | [中文](README.zh-CN.md)
+🇺🇸 English | [🇨🇳 中文](README.zh-CN.md)
 
-HarnessWeaver is a reusable Codex harness engineering template for PRD-first, task-based AI-assisted development.
+![HarnessWeaver workflow hero](docs/assets/harnessweaver-hero.png)
+
+**Bootstrap a structured harness for AI-assisted development.**
+
+Reusable Codex harness engineering template for PRD-first, task-based AI-assisted development.
+
+</div>
 
 It helps new projects start with a stable `AGENTS.md` entry point, PRD-first planning, small implementation tasks, verification before handoff, human review before commit, harness maturity stages, and project-specific guardrails.
 
 HarnessWeaver is not an application framework. It does not choose your frontend stack, backend, database, deployment model, or AI provider. It gives Codex and humans a reusable operating system for making those choices deliberately.
+
+## What You Get
+
+- A reusable `AGENTS.md` workflow for Codex-assisted projects.
+- PRD, task, verification, handoff, and commit guides.
+- Config-based initialization for new project instances.
+- Template, instance, and strict-instance verification modes.
+- Harness maturity stages from framework checks to continuous checks.
+- Optional local Codex skill for HarnessWeaver initialization and validation.
 
 ## Who Is This For?
 

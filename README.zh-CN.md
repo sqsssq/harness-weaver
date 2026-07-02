@@ -1,8 +1,16 @@
+<div align="center">
+
 # HarnessWeaver
 
-[English](README.md) | 中文
+[🇺🇸 English](README.md) | 🇨🇳 中文
 
-HarnessWeaver 是一个可复用的 Codex harness engineering 模板，用于在新项目开始前建立 PRD-first、task-based 的 AI 辅助开发流程。
+![HarnessWeaver workflow hero](docs/assets/harnessweaver-hero.png)
+
+**为 AI 辅助开发启动一套结构化 harness。**
+
+可复用的 Codex harness engineering 模板，用于在新项目开始前建立 PRD-first、task-based 的 AI 辅助开发流程。
+
+</div>
 
 它帮助项目从一开始就具备：
 
@@ -16,6 +24,15 @@ HarnessWeaver 是一个可复用的 Codex harness engineering 模板，用于在
 - 可替换的项目领域规则。
 
 HarnessWeaver 不是应用框架。它不会替你选择前端、后端、数据库、部署方式或 AI provider。它提供的是一套可复用的“项目操作系统”，帮助人和 Codex 更稳地做这些决策。
+
+## 你会得到什么
+
+- 一套可复用的 `AGENTS.md` Codex 项目工作流；
+- PRD、任务拆分、验证、handoff 和 commit 指南；
+- 基于配置文件的新项目初始化流程；
+- template、instance 和 strict-instance 三种验证模式；
+- 从 framework checks 到 continuous checks 的 harness maturity stages；
+- 可选的本地 Codex skill，用于 HarnessWeaver 初始化和验证。
 
 ## 适合谁？
 
