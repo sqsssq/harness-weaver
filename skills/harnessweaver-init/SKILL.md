@@ -27,9 +27,10 @@ If any required input is missing and cannot be inferred safely, ask a concise qu
 ## Workflow
 
 1. Locate the HarnessWeaver source template.
-   - If running inside the HarnessWeaver repo, use the current repo root.
+   - If the current working directory is a HarnessWeaver repo, use the current repo root.
    - If the user gives a path or repo URL, use that.
    - Otherwise ask for the source template location.
+   - Do not assume or mention a hard-coded local path such as a specific user's `Projects/harness-weaver` directory unless the user provided it or the current workspace is exactly that repo.
 2. Confirm the target path does not already contain unrelated work. If it exists and is non-empty, ask before overwriting or merging.
 3. Copy the template to the target path.
    - Exclude `.git/`.
