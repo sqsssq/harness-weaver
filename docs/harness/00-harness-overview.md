@@ -7,6 +7,7 @@ The harness is a planning and verification layer for AI-assisted development. It
 ## Feedforward Guides
 
 - `AGENTS.md`
+- `CHANGELOG.md`
 - `docs/prd/`
 - `docs/meta/`
 - `docs/domain/PROJECT_RULES.md`
@@ -16,6 +17,7 @@ The harness is a planning and verification layer for AI-assisted development. It
 - `docs/harness/05-stage-checklists.md`
 - `docs/harness/stages/`
 - `config/init-project.example.env`
+- `docs/meta/UPGRADE_GUIDE.md`
 
 ## Feedback Sensors
 

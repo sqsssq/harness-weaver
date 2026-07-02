@@ -103,6 +103,8 @@ HarnessWeaver 把 harness 分成 5 个阶段。项目不需要一开始完成所
 - `docs/prd/`：项目专属产品方向；
 - `config/`：可复用初始化配置示例。
 
+模板变更记录在 `CHANGELOG.md`。已有项目如果要吸收新版 HarnessWeaver 改进，可以参考 `docs/meta/UPGRADE_GUIDE.md`。
+
 ## 验证模式
 
 HarnessWeaver 区分模板验证和实例验证：

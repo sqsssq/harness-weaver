@@ -66,6 +66,8 @@ Keep generic workflow separate from project-specific rules.
 - `docs/prd/`: project-specific product direction.
 - `config/`: reusable initialization config examples.
 
+Template changes are tracked in `CHANGELOG.md`. Existing projects can use `docs/meta/UPGRADE_GUIDE.md` when pulling newer HarnessWeaver improvements forward.
+
 ## Verification Modes
 
 HarnessWeaver separates template verification from instance verification:
