@@ -7,6 +7,7 @@ echo "=========================="
 required_files=(
   "AGENTS.md"
   "README.md"
+  "README.zh-CN.md"
   "docs/domain/PROJECT_RULES.md"
   "docs/prd/00-product-brief.md"
   "docs/prd/01-mvp-scope.md"
@@ -34,6 +35,11 @@ required_files=(
   "docs/harness/03-architecture-fitness-rules.md"
   "docs/harness/04-quality-rules.md"
   "docs/harness/05-stage-checklists.md"
+  "docs/harness/stages/stage-0-framework.md"
+  "docs/harness/stages/stage-1-fixture-schema.md"
+  "docs/harness/stages/stage-2-logic.md"
+  "docs/harness/stages/stage-3-product-ui.md"
+  "docs/harness/stages/stage-4-continuous.md"
 )
 
 missing=0

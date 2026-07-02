@@ -13,6 +13,7 @@ The harness is a planning and verification layer for AI-assisted development. It
 - `docs/harness/03-architecture-fitness-rules.md`
 - `docs/harness/04-quality-rules.md`
 - `docs/harness/05-stage-checklists.md`
+- `docs/harness/stages/`
 
 ## Feedback Sensors
 
@@ -33,3 +34,5 @@ Initial sensor categories:
 - Stage 2: Logic Harness
 - Stage 3: Product UI Harness
 - Stage 4: Continuous Harness
+
+Detailed gates live in `docs/harness/stages/`. Each stage document defines purpose, trigger conditions, required artifacts, completion checklist, verification command, when not to start, and an example task.

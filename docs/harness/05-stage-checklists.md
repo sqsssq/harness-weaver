@@ -1,5 +1,13 @@
 # Harness Stage Checklists
 
+Detailed stage gates:
+
+- `docs/harness/stages/stage-0-framework.md`
+- `docs/harness/stages/stage-1-fixture-schema.md`
+- `docs/harness/stages/stage-2-logic.md`
+- `docs/harness/stages/stage-3-product-ui.md`
+- `docs/harness/stages/stage-4-continuous.md`
+
 ## Stage 0: Framework Harness
 
 Ready when:

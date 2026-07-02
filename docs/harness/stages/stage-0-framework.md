@@ -1,0 +1,55 @@
+# Stage 0: Framework Harness
+
+## Purpose
+
+Stage 0 establishes the project operating system before product code exists. It gives Codex and humans a shared structure for PRD-first planning, task execution, verification, review, and commit discipline.
+
+## Trigger Conditions
+
+Start Stage 0 when:
+
+- a new project is being initialized,
+- an existing project lacks a clear AI-assisted development workflow,
+- Codex needs stable project guardrails before implementation,
+- the team wants a reusable verification entry point before product code is added.
+
+## Required Artifacts
+
+- `AGENTS.md`
+- `README.md`
+- `docs/prd/`
+- `docs/tasks/README.md`
+- `docs/tasks/TASK_TEMPLATE.md`
+- `docs/meta/`
+- `docs/harness/`
+- `docs/domain/PROJECT_RULES.md`
+- `scripts/verify.sh`
+
+## Completion Checklist
+
+- [ ] `AGENTS.md` points to existing workflow docs.
+- [ ] PRD files describe product direction and MVP boundaries.
+- [ ] Task workflow defines status lifecycle and task template.
+- [ ] Meta docs describe PRD generation, task breakdown, execution, change requests, verification, diff review, handoff, and commit.
+- [ ] Harness docs define failure patterns, architecture rules, quality rules, stage checklists, and stage gates.
+- [ ] Domain rules define project-specific guardrails.
+- [ ] `scripts/verify.sh` runs successfully.
+- [ ] No source-project-specific assumptions remain after customization.
+
+## Verification Command
+
+```bash
+bash scripts/verify.sh
+```
+
+## Do Not Start If
+
+Stage 0 should almost always be safe to start. If the project already has strong workflow docs, use this stage as an audit rather than replacing everything.
+
+## Example Task
+
+```text
+Task: Initialize Stage 0 framework harness for {PROJECT_NAME}
+Goal: Add PRD, task, meta, harness, domain, and verification scaffold without product code.
+Verification: bash scripts/verify.sh
+```
