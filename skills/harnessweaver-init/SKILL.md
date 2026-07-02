@@ -1,6 +1,6 @@
 ---
 name: harnessweaver-init
-description: Initialize a new project from the HarnessWeaver template. Use when the user asks to create, scaffold, copy, bootstrap, rehearse, or validate a HarnessWeaver-based project; generate or review init-project.env; run init-project.sh; run --template, --instance, or --strict-instance verification; or prepare a handoff for HarnessWeaver project initialization.
+description: Initialize and validate new projects from the HarnessWeaver template. Use when the user asks to create, scaffold, copy, bootstrap, initialize, rehearse, reuse, or verify a HarnessWeaver-based project; asks in Chinese to 创建、初始化、复用、演练、验证 HarnessWeaver 模板项目; generate or review init-project.env; run init-project.sh; run --template, --instance, or --strict-instance verification; or prepare a handoff for HarnessWeaver project initialization. Do not use for generic project scaffolding unrelated to HarnessWeaver.
 ---
 
 # HarnessWeaver Init
