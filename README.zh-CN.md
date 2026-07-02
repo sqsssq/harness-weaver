@@ -105,6 +105,10 @@ HarnessWeaver 把 harness 分成 5 个阶段。项目不需要一开始完成所
 
 模板变更记录在 `CHANGELOG.md`。已有项目如果要吸收新版 HarnessWeaver 改进，可以参考 `docs/meta/UPGRADE_GUIDE.md`。
 
+## 可选 Codex Skill
+
+本仓库包含一个可选 Codex skill：`skills/harnessweaver-init/`，用于初始化基于 HarnessWeaver 的项目。这个 skill 属于本仓库配套能力，但新项目不必须复制它。
+
 ## 验证模式
 
 HarnessWeaver 区分模板验证和实例验证：

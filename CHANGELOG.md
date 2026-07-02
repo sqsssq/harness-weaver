@@ -13,6 +13,7 @@ This project follows semantic versioning once tagged releases begin. Until then,
 - Project-specific design standards entry point at `docs/design.md`.
 - Strict instance readiness guide at `docs/harness/06-strict-readiness.md`.
 - Local initialization config ignore rule for `init-project.env`.
+- Optional Codex skill scaffold at `skills/harnessweaver-init/` for HarnessWeaver project initialization.
 
 ### Changed
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "HarnessWeaver Init"
+  short_description: "Initialize HarnessWeaver project scaffolds"
+  default_prompt: "Use $harnessweaver-init to initialize a new project from the HarnessWeaver template."

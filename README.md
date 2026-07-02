@@ -68,6 +68,10 @@ Keep generic workflow separate from project-specific rules.
 
 Template changes are tracked in `CHANGELOG.md`. Existing projects can use `docs/meta/UPGRADE_GUIDE.md` when pulling newer HarnessWeaver improvements forward.
 
+## Optional Codex Skill
+
+This repository includes an optional Codex skill at `skills/harnessweaver-init/` for initializing HarnessWeaver-based projects. The skill is part of this repo, but it is not required in projects created from the template.
+
 ## Verification Modes
 
 HarnessWeaver separates template verification from instance verification:
