@@ -60,7 +60,7 @@ HarnessWeaver separates template verification from instance verification:
 - `bash scripts/verify.sh --instance` fails if placeholder tokens remain.
 - `bash scripts/verify.sh --strict-instance` fails if placeholder tokens or unresolved TODO markers remain.
 
-Both modes check required files, source-project-specific leakage, executable scripts, and Markdown path references.
+All modes check required files, source-project-specific leakage, executable scripts, and Markdown path references.
 
 ## Harness Stages
 

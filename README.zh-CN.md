@@ -95,7 +95,7 @@ HarnessWeaver 区分模板验证和实例验证：
 - `bash scripts/verify.sh --instance` 如果发现占位符残留就会失败。
 - `bash scripts/verify.sh --strict-instance` 如果发现占位符或未解决的 TODO 标记残留就会失败。
 
-两种模式都会检查必需文件、源项目专属词残留、脚本可执行权限和 Markdown 路径引用。
+所有模式都会检查必需文件、源项目专属词残留、脚本可执行权限和 Markdown 路径引用。
 
 ## 什么时候适合使用
 
