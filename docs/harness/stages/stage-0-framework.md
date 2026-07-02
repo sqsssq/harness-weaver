@@ -37,6 +37,7 @@ Start Stage 0 when:
 - [ ] `scripts/verify.sh` runs successfully.
 - [ ] `bash scripts/verify.sh --template` passes before customization.
 - [ ] `bash scripts/verify.sh --instance` passes after customization.
+- [ ] `bash scripts/verify.sh --strict-instance` passes before task execution.
 - [ ] Markdown path references resolve to existing files or directories.
 - [ ] No source-project-specific assumptions remain after customization.
 

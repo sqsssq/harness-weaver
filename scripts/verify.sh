@@ -5,11 +5,12 @@ mode="template"
 
 usage() {
   cat <<'EOF'
-Usage: bash scripts/verify.sh [--template|--instance]
+Usage: bash scripts/verify.sh [--template|--instance|--strict-instance]
 
 Modes:
-  --template   Verify this repository as a reusable template. Placeholder tokens are allowed.
-  --instance   Verify a copied project instance. Placeholder tokens like {PROJECT_NAME} fail.
+  --template          Verify this repository as a reusable template. Placeholder tokens are allowed.
+  --instance          Verify a copied project instance. Placeholder tokens like {PROJECT_NAME} fail.
+  --strict-instance   Verify an implementation-ready instance. Placeholder tokens and TODO markers fail.
 
 Default: --template
 EOF
@@ -22,6 +23,9 @@ for arg in "$@"; do
       ;;
     --instance)
       mode="instance"
+      ;;
+    --strict-instance)
+      mode="strict-instance"
       ;;
     -h|--help)
       usage
@@ -110,7 +114,7 @@ done
 echo "Required scripts are executable."
 
 placeholder_pattern='\{[A-Z][A-Z0-9_]*\}'
-if [[ "$mode" == "instance" ]]; then
+if [[ "$mode" == "instance" || "$mode" == "strict-instance" ]]; then
   if grep -R -n -E "$placeholder_pattern" AGENTS.md README.md README.zh-CN.md docs; then
     echo "Instance mode does not allow unresolved placeholder tokens."
     exit 1
@@ -119,6 +123,14 @@ if [[ "$mode" == "instance" ]]; then
 else
   placeholder_count=$(grep -R -h -E -o "$placeholder_pattern" AGENTS.md README.md README.zh-CN.md docs | wc -l | tr -d ' ')
   echo "Template placeholder tokens allowed: $placeholder_count found."
+fi
+
+if [[ "$mode" == "strict-instance" ]]; then
+  if grep -R -n -E 'TODO:' AGENTS.md README.md README.zh-CN.md docs; then
+    echo "Strict instance mode does not allow TODO markers."
+    exit 1
+  fi
+  echo "No TODO markers found."
 fi
 
 path_failed=0

@@ -17,8 +17,19 @@ Optional:
   --feedback-reasoning-rule "feedback reasoning rule"
 
 This script replaces common HarnessWeaver placeholders in-place.
-Run `bash scripts/verify.sh --instance` after customization.
+Run `bash scripts/verify.sh --instance` after initialization.
+Run `bash scripts/verify.sh --strict-instance` when the project is ready for task execution.
 EOF
+}
+
+require_value() {
+  local option="$1"
+  local value="${2-}"
+  if [[ -z "$value" || "$value" == --* ]]; then
+    echo "Missing value for $option"
+    usage
+    exit 1
+  fi
 }
 
 project_name=""
@@ -33,35 +44,43 @@ feedback_reasoning_rule="why the result or recommendation matters"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --project-name)
-      project_name="${2:-}"
+      require_value "$1" "${2-}"
+      project_name="$2"
       shift 2
       ;;
     --domain)
-      domain="${2:-}"
+      require_value "$1" "${2-}"
+      domain="$2"
       shift 2
       ;;
     --primary-user)
-      primary_user="${2:-}"
+      require_value "$1" "${2-}"
+      primary_user="$2"
       shift 2
       ;;
     --mvp-focus)
-      mvp_focus="${2:-}"
+      require_value "$1" "${2-}"
+      mvp_focus="$2"
       shift 2
       ;;
     --generic-failure-mode)
-      generic_failure_mode="${2:-}"
+      require_value "$1" "${2-}"
+      generic_failure_mode="$2"
       shift 2
       ;;
     --primary-user-goal)
-      primary_user_goal="${2:-}"
+      require_value "$1" "${2-}"
+      primary_user_goal="$2"
       shift 2
       ;;
     --content-review-status-rule)
-      content_review_status_rule="${2:-}"
+      require_value "$1" "${2-}"
+      content_review_status_rule="$2"
       shift 2
       ;;
     --feedback-reasoning-rule)
-      feedback_reasoning_rule="${2:-}"
+      require_value "$1" "${2-}"
+      feedback_reasoning_rule="$2"
       shift 2
       ;;
     -h|--help)
@@ -188,4 +207,5 @@ find AGENTS.md README.md README.zh-CN.md docs -type f -name '*.md' -print0 |
   '
 
 echo "Replaced common HarnessWeaver placeholders."
-echo "Next: edit TODO values, then run: bash scripts/verify.sh --instance"
+echo "Next: run bash scripts/verify.sh --instance."
+echo "When TODO values are resolved, run bash scripts/verify.sh --strict-instance."

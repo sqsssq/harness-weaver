@@ -31,10 +31,16 @@ bash scripts/init-project.sh \
   --mvp-focus "capture and review daily notes"
 ```
 
-8. Edit remaining `TODO` values, then run instance verification:
+8. Run instance verification:
 
 ```bash
 bash scripts/verify.sh --instance
+```
+
+9. Edit remaining `TODO` values, then run strict instance verification before task execution:
+
+```bash
+bash scripts/verify.sh --strict-instance
 ```
 
 ## Template Principle
@@ -52,6 +58,7 @@ HarnessWeaver separates template verification from instance verification:
 
 - `bash scripts/verify.sh --template` allows placeholder tokens like `{PROJECT_NAME}`.
 - `bash scripts/verify.sh --instance` fails if placeholder tokens remain.
+- `bash scripts/verify.sh --strict-instance` fails if placeholder tokens or unresolved TODO markers remain.
 
 Both modes check required files, source-project-specific leakage, executable scripts, and Markdown path references.
 
