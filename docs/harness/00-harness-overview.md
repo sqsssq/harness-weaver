@@ -10,10 +10,12 @@ The harness is a planning and verification layer for AI-assisted development. It
 - `docs/prd/`
 - `docs/meta/`
 - `docs/domain/PROJECT_RULES.md`
+- `docs/design.md`
 - `docs/harness/03-architecture-fitness-rules.md`
 - `docs/harness/04-quality-rules.md`
 - `docs/harness/05-stage-checklists.md`
 - `docs/harness/stages/`
+- `config/init-project.example.env`
 
 ## Feedback Sensors
 
@@ -21,6 +23,7 @@ Initial sensor categories:
 
 - file path consistency,
 - absence of template placeholder leakage when customized,
+- strict instance readiness before task execution,
 - no product code during framework-only work,
 - domain-specific quality rule coverage,
 - MVP loop completeness,

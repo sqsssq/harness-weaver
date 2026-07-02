@@ -30,7 +30,16 @@ HarnessWeaver 不是应用框架。它不会替你选择前端、后端、数据
 bash scripts/verify.sh --template
 ```
 
-7. 可选：用初始化脚本替换常见占位符：
+7. 用配置文件替换常见占位符：
+
+```bash
+cp config/init-project.example.env init-project.env
+# 编辑 init-project.env，然后运行：
+bash scripts/init-project.sh --config init-project.env --dry-run
+bash scripts/init-project.sh --config init-project.env
+```
+
+也可以直接通过命令行传入核心字段：
 
 ```bash
 bash scripts/init-project.sh \
@@ -52,6 +61,9 @@ bash scripts/verify.sh --instance
 bash scripts/verify.sh --strict-instance
 ```
 
+推荐编辑顺序见 `docs/harness/06-strict-readiness.md`。
+如果项目会包含 UI 或体验设计，请在产品 UI 工作前填写 `docs/design.md`。
+
 ## 推荐先改哪些文件
 
 - `AGENTS.md`
@@ -59,6 +71,8 @@ bash scripts/verify.sh --strict-instance
 - `docs/prd/00-product-brief.md`
 - `docs/prd/01-mvp-scope.md`
 - `docs/harness/stages/`
+- `docs/design.md`
+- `docs/harness/06-strict-readiness.md`
 
 ## Harness 阶段
 
@@ -85,7 +99,9 @@ HarnessWeaver 把 harness 分成 5 个阶段。项目不需要一开始完成所
 - `docs/meta/`：通用 Codex workflow；
 - `docs/harness/`：通用 harness engineering 结构；
 - `docs/domain/`：项目专属 guardrails；
-- `docs/prd/`：项目专属产品方向。
+- `docs/design.md`：项目专属设计标准；
+- `docs/prd/`：项目专属产品方向；
+- `config/`：可复用初始化配置示例。
 
 ## 验证模式
 

@@ -2,7 +2,7 @@
 
 ## Summary
 
-`{PROJECT_NAME}` is `{PROJECT_SUMMARY}`.
+`{PROJECT_NAME}` is {PROJECT_SUMMARY}.
 
 ## Product Context
 

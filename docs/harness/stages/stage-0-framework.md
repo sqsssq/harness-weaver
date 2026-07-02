@@ -23,6 +23,8 @@ Start Stage 0 when:
 - `docs/meta/`
 - `docs/harness/`
 - `docs/domain/PROJECT_RULES.md`
+- `docs/design.md`
+- `config/init-project.example.env`
 - `scripts/verify.sh`
 - `scripts/init-project.sh`
 
@@ -34,6 +36,8 @@ Start Stage 0 when:
 - [ ] Meta docs describe PRD generation, task breakdown, execution, change requests, verification, diff review, handoff, and commit.
 - [ ] Harness docs define failure patterns, architecture rules, quality rules, stage checklists, and stage gates.
 - [ ] Domain rules define project-specific guardrails.
+- [ ] Design standards define how future UI or experience work should support the MVP loop.
+- [ ] Initialization config example supports a repeatable setup path.
 - [ ] `scripts/verify.sh` runs successfully.
 - [ ] `bash scripts/verify.sh --template` passes before customization.
 - [ ] `bash scripts/verify.sh --instance` passes after customization.

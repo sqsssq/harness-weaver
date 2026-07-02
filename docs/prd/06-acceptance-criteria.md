@@ -7,6 +7,8 @@
 - `docs/meta/` describes reusable AI development workflow.
 - `docs/harness/` describes harness maturity, sensors, and failure patterns.
 - `docs/domain/` describes project-specific rules.
+- `docs/design.md` describes project-specific design standards.
+- `config/init-project.example.env` supports repeatable project initialization.
 - `docs/tasks/TASK_TEMPLATE.md` enforces small scope, acceptance criteria, verification, and handoff.
 - `scripts/verify.sh` runs successfully.
 

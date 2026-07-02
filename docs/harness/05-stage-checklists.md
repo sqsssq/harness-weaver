@@ -17,6 +17,7 @@ Ready when:
 - [ ] `docs/meta/` defines PRD-first, task-based workflow.
 - [ ] `docs/tasks/TASK_TEMPLATE.md` enforces scope, acceptance criteria, verification, and handoff.
 - [ ] `docs/domain/PROJECT_RULES.md` defines project-specific guardrails.
+- [ ] `docs/design.md` defines project-specific design standards.
 - [ ] `docs/harness/` defines failure patterns, architecture rules, and quality rules.
 - [ ] `scripts/verify.sh` exists and runs successfully.
 

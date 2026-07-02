@@ -45,8 +45,11 @@ echo "Mode: $mode"
 
 required_files=(
   "AGENTS.md"
+  ".gitignore"
   "README.md"
   "README.zh-CN.md"
+  "config/init-project.example.env"
+  "docs/design.md"
   "docs/domain/PROJECT_RULES.md"
   "docs/prd/00-product-brief.md"
   "docs/prd/01-mvp-scope.md"
@@ -74,6 +77,7 @@ required_files=(
   "docs/harness/03-architecture-fitness-rules.md"
   "docs/harness/04-quality-rules.md"
   "docs/harness/05-stage-checklists.md"
+  "docs/harness/06-strict-readiness.md"
   "docs/harness/stages/stage-0-framework.md"
   "docs/harness/stages/stage-1-fixture-schema.md"
   "docs/harness/stages/stage-2-logic.md"
@@ -97,7 +101,7 @@ fi
 echo "Required template files exist."
 
 source_terms="BioQues[t]|QuestLa[b]|QuestWeave[r]|R[B]M|P[r]oposal Analytic[s]|P[S] recommendation"
-if grep -R -n -E "$source_terms" AGENTS.md README.md README.zh-CN.md docs scripts; then
+if grep -R -n -E "$source_terms" AGENTS.md README.md README.zh-CN.md config docs scripts; then
   echo "Found source-project-specific terms. Please review the matches above."
   exit 1
 fi
@@ -126,10 +130,17 @@ else
 fi
 
 if [[ "$mode" == "strict-instance" ]]; then
-  if grep -R -n -E 'TODO:' AGENTS.md README.md README.zh-CN.md docs; then
+  todo_matches="$(mktemp)"
+  if grep -R -n -E 'TODO:' AGENTS.md README.md README.zh-CN.md docs > "$todo_matches"; then
+    cat "$todo_matches"
+    echo
+    echo "Strict instance TODO summary:"
+    cut -d ':' -f 1 "$todo_matches" | sort | uniq -c | awk '{print "- " $2 ": " $1}'
+    rm -f "$todo_matches"
     echo "Strict instance mode does not allow TODO markers."
     exit 1
   fi
+  rm -f "$todo_matches"
   echo "No TODO markers found."
 fi
 
@@ -139,6 +150,7 @@ while IFS= read -r ref; do
   [[ "$ref" == *"..."* ]] && continue
   [[ "$ref" == *"*"* ]] && continue
   [[ "$ref" == *"{"* ]] && continue
+  [[ "$ref" == *" "* ]] && continue
   if [[ "$ref" == */ ]]; then
     if [[ ! -d "${ref%/}" ]]; then
       echo "Referenced directory does not exist: $ref"
@@ -151,7 +163,7 @@ while IFS= read -r ref; do
     fi
   fi
 done < <(
-  grep -R -h -E -o '`(AGENTS\.md|README[^`]*\.md|docs/[^`]+|scripts/[^`]+)`' AGENTS.md README.md README.zh-CN.md docs |
+  grep -R -h -E -o '`(AGENTS\.md|README[^`]*\.md|config/[^`]+|docs/[^`]+|scripts/[^`]+)`' AGENTS.md README.md README.zh-CN.md docs |
     sed 's/^`//; s/`$//' |
     sort -u
 )

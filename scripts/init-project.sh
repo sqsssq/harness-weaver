@@ -11,12 +11,15 @@ Usage:
     --mvp-focus "MVP focus"
 
 Optional:
+  --config path/to/init-project.env
+  --dry-run
   --generic-failure-mode "generic app drift"
   --primary-user-goal "primary user goal"
   --content-review-status-rule "review status rule"
   --feedback-reasoning-rule "feedback reasoning rule"
 
 This script replaces common HarnessWeaver placeholders in-place.
+Config files use shell-style HW_* variables. See config/init-project.example.env.
 Run `bash scripts/verify.sh --instance` after initialization.
 Run `bash scripts/verify.sh --strict-instance` when the project is ready for task execution.
 EOF
@@ -32,17 +35,177 @@ require_value() {
   fi
 }
 
+missing_required=0
+check_required() {
+  local name="$1"
+  local value="$2"
+  if [[ -z "$value" ]]; then
+    echo "Missing required value: $name"
+    missing_required=1
+  fi
+}
+
+print_plan() {
+  cat <<EOF
+HarnessWeaver initialization plan
+=================================
+Project name: $project_name
+Domain: $domain
+Primary user: $primary_user
+MVP focus: $mvp_focus
+Non-goals: $non_goals
+Project summary: $project_summary
+Generic failure mode: $generic_failure_mode
+Primary user goal: $primary_user_goal
+
+Run without --dry-run to replace placeholders in AGENTS.md, README.md, README.zh-CN.md, and docs/*.md.
+EOF
+}
+
+load_config() {
+  local file="$1"
+  if [[ ! -f "$file" ]]; then
+    echo "Config file does not exist: $file"
+    exit 1
+  fi
+
+  set -a
+  # shellcheck disable=SC1090
+  . "$file"
+  set +a
+}
+
+apply_config_defaults() {
+  project_name="${HW_PROJECT_NAME:-$project_name}"
+  domain="${HW_DOMAIN:-$domain}"
+  primary_user="${HW_PRIMARY_USER:-$primary_user}"
+  mvp_focus="${HW_MVP_FOCUS:-$mvp_focus}"
+  non_goals="${HW_NON_GOALS:-$non_goals}"
+  project_summary="${HW_PROJECT_SUMMARY:-$project_summary}"
+  primary_user_problem="${HW_PRIMARY_USER_PROBLEM:-$primary_user_problem}"
+  product_promise="${HW_PRODUCT_PROMISE:-$product_promise}"
+  success_criterion_1="${HW_SUCCESS_CRITERION_1:-$success_criterion_1}"
+  success_criterion_2="${HW_SUCCESS_CRITERION_2:-$success_criterion_2}"
+  success_criterion_3="${HW_SUCCESS_CRITERION_3:-$success_criterion_3}"
+  in_scope_1="${HW_IN_SCOPE_1:-$in_scope_1}"
+  in_scope_2="${HW_IN_SCOPE_2:-$in_scope_2}"
+  in_scope_3="${HW_IN_SCOPE_3:-$in_scope_3}"
+  out_of_scope_1="${HW_OUT_OF_SCOPE_1:-$out_of_scope_1}"
+  out_of_scope_2="${HW_OUT_OF_SCOPE_2:-$out_of_scope_2}"
+  out_of_scope_3="${HW_OUT_OF_SCOPE_3:-$out_of_scope_3}"
+  mvp_loop_step_1="${HW_MVP_LOOP_STEP_1:-$mvp_loop_step_1}"
+  mvp_loop_step_2="${HW_MVP_LOOP_STEP_2:-$mvp_loop_step_2}"
+  mvp_loop_step_3="${HW_MVP_LOOP_STEP_3:-$mvp_loop_step_3}"
+  mvp_loop_step_4="${HW_MVP_LOOP_STEP_4:-$mvp_loop_step_4}"
+  primary_flow_step_1="${HW_PRIMARY_FLOW_STEP_1:-$primary_flow_step_1}"
+  primary_flow_step_2="${HW_PRIMARY_FLOW_STEP_2:-$primary_flow_step_2}"
+  primary_flow_step_3="${HW_PRIMARY_FLOW_STEP_3:-$primary_flow_step_3}"
+  primary_flow_step_4="${HW_PRIMARY_FLOW_STEP_4:-$primary_flow_step_4}"
+  edge_flow_1="${HW_EDGE_FLOW_1:-$edge_flow_1}"
+  edge_flow_2="${HW_EDGE_FLOW_2:-$edge_flow_2}"
+  edge_flow_3="${HW_EDGE_FLOW_3:-$edge_flow_3}"
+  core_loop_step_1="${HW_CORE_LOOP_STEP_1:-$core_loop_step_1}"
+  core_loop_step_2="${HW_CORE_LOOP_STEP_2:-$core_loop_step_2}"
+  core_loop_step_3="${HW_CORE_LOOP_STEP_3:-$core_loop_step_3}"
+  core_loop_step_4="${HW_CORE_LOOP_STEP_4:-$core_loop_step_4}"
+  feature_principle_1="${HW_FEATURE_PRINCIPLE_1:-$feature_principle_1}"
+  feature_principle_2="${HW_FEATURE_PRINCIPLE_2:-$feature_principle_2}"
+  feature_principle_3="${HW_FEATURE_PRINCIPLE_3:-$feature_principle_3}"
+  field_1="${HW_FIELD_1:-$field_1}"
+  field_2="${HW_FIELD_2:-$field_2}"
+  field_3="${HW_FIELD_3:-$field_3}"
+  product_question_1="${HW_PRODUCT_QUESTION_1:-$product_question_1}"
+  product_question_2="${HW_PRODUCT_QUESTION_2:-$product_question_2}"
+  product_question_3="${HW_PRODUCT_QUESTION_3:-$product_question_3}"
+  technical_question_1="${HW_TECHNICAL_QUESTION_1:-$technical_question_1}"
+  technical_question_2="${HW_TECHNICAL_QUESTION_2:-$technical_question_2}"
+  technical_question_3="${HW_TECHNICAL_QUESTION_3:-$technical_question_3}"
+  generic_failure_mode="${HW_GENERIC_FAILURE_MODE:-$generic_failure_mode}"
+  primary_user_goal="${HW_PRIMARY_USER_GOAL:-$primary_user_goal}"
+  content_review_status_rule="${HW_CONTENT_REVIEW_STATUS_RULE:-$content_review_status_rule}"
+  feedback_reasoning_rule="${HW_FEEDBACK_REASONING_RULE:-$feedback_reasoning_rule}"
+}
+
 project_name=""
 domain=""
 primary_user=""
 mvp_focus=""
+non_goals=""
+project_summary=""
+primary_user_problem=""
+product_promise=""
+success_criterion_1=""
+success_criterion_2=""
+success_criterion_3=""
+in_scope_1=""
+in_scope_2=""
+in_scope_3=""
+out_of_scope_1=""
+out_of_scope_2=""
+out_of_scope_3=""
+mvp_loop_step_1=""
+mvp_loop_step_2=""
+mvp_loop_step_3=""
+mvp_loop_step_4=""
+primary_flow_step_1=""
+primary_flow_step_2=""
+primary_flow_step_3=""
+primary_flow_step_4=""
+edge_flow_1=""
+edge_flow_2=""
+edge_flow_3=""
+core_loop_step_1=""
+core_loop_step_2=""
+core_loop_step_3=""
+core_loop_step_4=""
+feature_principle_1=""
+feature_principle_2=""
+feature_principle_3=""
+field_1=""
+field_2=""
+field_3=""
+product_question_1=""
+product_question_2=""
+product_question_3=""
+technical_question_1=""
+technical_question_2=""
+technical_question_3=""
 generic_failure_mode="a generic app"
 primary_user_goal=""
 content_review_status_rule="explicit review status"
 feedback_reasoning_rule="why the result or recommendation matters"
+dry_run=0
+
+args=("$@")
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --config)
+      require_value "$1" "${2-}"
+      load_config "$2"
+      shift 2
+      ;;
+    --dry-run)
+      shift
+      ;;
+    *)
+      shift
+      ;;
+  esac
+done
+
+apply_config_defaults
+set -- "${args[@]}"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --config)
+      require_value "$1" "${2-}"
+      shift 2
+      ;;
+    --dry-run)
+      dry_run=1
+      shift
+      ;;
     --project-name)
       require_value "$1" "${2-}"
       project_name="$2"
@@ -95,8 +258,12 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ -z "$project_name" || -z "$domain" || -z "$primary_user" || -z "$mvp_focus" ]]; then
-  echo "Missing required arguments."
+check_required "HW_PROJECT_NAME or --project-name" "$project_name"
+check_required "HW_DOMAIN or --domain" "$domain"
+check_required "HW_PRIMARY_USER or --primary-user" "$primary_user"
+check_required "HW_MVP_FOCUS or --mvp-focus" "$mvp_focus"
+
+if [[ "$missing_required" -ne 0 ]]; then
   usage
   exit 1
 fi
@@ -105,50 +272,96 @@ if [[ -z "$primary_user_goal" ]]; then
   primary_user_goal="$mvp_focus"
 fi
 
+non_goals="${non_goals:-TODO: define explicit non-goals}"
+project_summary="${project_summary:-a $domain project}"
+primary_user_problem="${primary_user_problem:-TODO: define the primary user problem}"
+product_promise="${product_promise:-TODO: define the product promise}"
+success_criterion_1="${success_criterion_1:-TODO: define success criterion 1}"
+success_criterion_2="${success_criterion_2:-TODO: define success criterion 2}"
+success_criterion_3="${success_criterion_3:-TODO: define success criterion 3}"
+in_scope_1="${in_scope_1:-TODO: define in-scope item 1}"
+in_scope_2="${in_scope_2:-TODO: define in-scope item 2}"
+in_scope_3="${in_scope_3:-TODO: define in-scope item 3}"
+out_of_scope_1="${out_of_scope_1:-TODO: define out-of-scope item 1}"
+out_of_scope_2="${out_of_scope_2:-TODO: define out-of-scope item 2}"
+out_of_scope_3="${out_of_scope_3:-TODO: define out-of-scope item 3}"
+mvp_loop_step_1="${mvp_loop_step_1:-TODO: define MVP loop step 1}"
+mvp_loop_step_2="${mvp_loop_step_2:-TODO: define MVP loop step 2}"
+mvp_loop_step_3="${mvp_loop_step_3:-TODO: define MVP loop step 3}"
+mvp_loop_step_4="${mvp_loop_step_4:-TODO: define MVP loop step 4}"
+primary_flow_step_1="${primary_flow_step_1:-TODO: define primary flow step 1}"
+primary_flow_step_2="${primary_flow_step_2:-TODO: define primary flow step 2}"
+primary_flow_step_3="${primary_flow_step_3:-TODO: define primary flow step 3}"
+primary_flow_step_4="${primary_flow_step_4:-TODO: define primary flow step 4}"
+edge_flow_1="${edge_flow_1:-TODO: define edge flow 1}"
+edge_flow_2="${edge_flow_2:-TODO: define edge flow 2}"
+edge_flow_3="${edge_flow_3:-TODO: define edge flow 3}"
+core_loop_step_1="${core_loop_step_1:-TODO: define core loop step 1}"
+core_loop_step_2="${core_loop_step_2:-TODO: define core loop step 2}"
+core_loop_step_3="${core_loop_step_3:-TODO: define core loop step 3}"
+core_loop_step_4="${core_loop_step_4:-TODO: define core loop step 4}"
+feature_principle_1="${feature_principle_1:-TODO: define feature principle 1}"
+feature_principle_2="${feature_principle_2:-TODO: define feature principle 2}"
+feature_principle_3="${feature_principle_3:-TODO: define feature principle 3}"
+field_1="${field_1:-fieldOne}"
+field_2="${field_2:-fieldTwo}"
+field_3="${field_3:-fieldThree}"
+product_question_1="${product_question_1:-TODO: define product question 1}"
+product_question_2="${product_question_2:-TODO: define product question 2}"
+product_question_3="${product_question_3:-TODO: define product question 3}"
+technical_question_1="${technical_question_1:-TODO: define technical question 1}"
+technical_question_2="${technical_question_2:-TODO: define technical question 2}"
+technical_question_3="${technical_question_3:-TODO: define technical question 3}"
+
+if [[ "$dry_run" -eq 1 ]]; then
+  print_plan
+  exit 0
+fi
+
 export HW_PROJECT_NAME="$project_name"
 export HW_DOMAIN="$domain"
 export HW_PRIMARY_USER="$primary_user"
 export HW_MVP_FOCUS="$mvp_focus"
-export HW_NON_GOALS="TODO: define explicit non-goals"
-export HW_PROJECT_SUMMARY="$project_name is a $domain project."
-export HW_PRIMARY_USER_PROBLEM="TODO: define the primary user problem"
-export HW_PRODUCT_PROMISE="TODO: define the product promise"
-export HW_SUCCESS_CRITERION_1="TODO: define success criterion 1"
-export HW_SUCCESS_CRITERION_2="TODO: define success criterion 2"
-export HW_SUCCESS_CRITERION_3="TODO: define success criterion 3"
-export HW_IN_SCOPE_1="TODO: define in-scope item 1"
-export HW_IN_SCOPE_2="TODO: define in-scope item 2"
-export HW_IN_SCOPE_3="TODO: define in-scope item 3"
-export HW_OUT_OF_SCOPE_1="TODO: define out-of-scope item 1"
-export HW_OUT_OF_SCOPE_2="TODO: define out-of-scope item 2"
-export HW_OUT_OF_SCOPE_3="TODO: define out-of-scope item 3"
-export HW_MVP_LOOP_STEP_1="TODO: define MVP loop step 1"
-export HW_MVP_LOOP_STEP_2="TODO: define MVP loop step 2"
-export HW_MVP_LOOP_STEP_3="TODO: define MVP loop step 3"
-export HW_MVP_LOOP_STEP_4="TODO: define MVP loop step 4"
-export HW_PRIMARY_FLOW_STEP_1="TODO: define primary flow step 1"
-export HW_PRIMARY_FLOW_STEP_2="TODO: define primary flow step 2"
-export HW_PRIMARY_FLOW_STEP_3="TODO: define primary flow step 3"
-export HW_PRIMARY_FLOW_STEP_4="TODO: define primary flow step 4"
-export HW_EDGE_FLOW_1="TODO: define edge flow 1"
-export HW_EDGE_FLOW_2="TODO: define edge flow 2"
-export HW_EDGE_FLOW_3="TODO: define edge flow 3"
-export HW_CORE_LOOP_STEP_1="TODO: define core loop step 1"
-export HW_CORE_LOOP_STEP_2="TODO: define core loop step 2"
-export HW_CORE_LOOP_STEP_3="TODO: define core loop step 3"
-export HW_CORE_LOOP_STEP_4="TODO: define core loop step 4"
-export HW_FEATURE_PRINCIPLE_1="TODO: define feature principle 1"
-export HW_FEATURE_PRINCIPLE_2="TODO: define feature principle 2"
-export HW_FEATURE_PRINCIPLE_3="TODO: define feature principle 3"
-export HW_FIELD_1="fieldOne"
-export HW_FIELD_2="fieldTwo"
-export HW_FIELD_3="fieldThree"
-export HW_PRODUCT_QUESTION_1="TODO: define product question 1"
-export HW_PRODUCT_QUESTION_2="TODO: define product question 2"
-export HW_PRODUCT_QUESTION_3="TODO: define product question 3"
-export HW_TECHNICAL_QUESTION_1="TODO: define technical question 1"
-export HW_TECHNICAL_QUESTION_2="TODO: define technical question 2"
-export HW_TECHNICAL_QUESTION_3="TODO: define technical question 3"
+export HW_NON_GOALS="$non_goals"
+export HW_PROJECT_SUMMARY="$project_summary"
+export HW_PRIMARY_USER_PROBLEM="$primary_user_problem"
+export HW_PRODUCT_PROMISE="$product_promise"
+export HW_SUCCESS_CRITERION_1="$success_criterion_1"
+export HW_SUCCESS_CRITERION_2="$success_criterion_2"
+export HW_SUCCESS_CRITERION_3="$success_criterion_3"
+export HW_IN_SCOPE_1="$in_scope_1"
+export HW_IN_SCOPE_2="$in_scope_2"
+export HW_IN_SCOPE_3="$in_scope_3"
+export HW_OUT_OF_SCOPE_1="$out_of_scope_1"
+export HW_OUT_OF_SCOPE_2="$out_of_scope_2"
+export HW_OUT_OF_SCOPE_3="$out_of_scope_3"
+export HW_MVP_LOOP_STEP_1="$mvp_loop_step_1"
+export HW_MVP_LOOP_STEP_2="$mvp_loop_step_2"
+export HW_MVP_LOOP_STEP_3="$mvp_loop_step_3"
+export HW_MVP_LOOP_STEP_4="$mvp_loop_step_4"
+export HW_PRIMARY_FLOW_STEP_1="$primary_flow_step_1"
+export HW_PRIMARY_FLOW_STEP_2="$primary_flow_step_2"
+export HW_PRIMARY_FLOW_STEP_3="$primary_flow_step_3"
+export HW_PRIMARY_FLOW_STEP_4="$primary_flow_step_4"
+export HW_EDGE_FLOW_1="$edge_flow_1"
+export HW_EDGE_FLOW_2="$edge_flow_2"
+export HW_EDGE_FLOW_3="$edge_flow_3"
+export HW_CORE_LOOP_STEP_1="$core_loop_step_1"
+export HW_CORE_LOOP_STEP_2="$core_loop_step_2"
+export HW_CORE_LOOP_STEP_3="$core_loop_step_3"
+export HW_CORE_LOOP_STEP_4="$core_loop_step_4"
+export HW_FEATURE_PRINCIPLE_1="$feature_principle_1"
+export HW_FEATURE_PRINCIPLE_2="$feature_principle_2"
+export HW_FEATURE_PRINCIPLE_3="$feature_principle_3"
+export HW_FIELD_1="$field_1"
+export HW_FIELD_2="$field_2"
+export HW_FIELD_3="$field_3"
+export HW_PRODUCT_QUESTION_1="$product_question_1"
+export HW_PRODUCT_QUESTION_2="$product_question_2"
+export HW_PRODUCT_QUESTION_3="$product_question_3"
+export HW_TECHNICAL_QUESTION_1="$technical_question_1"
+export HW_TECHNICAL_QUESTION_2="$technical_question_2"
+export HW_TECHNICAL_QUESTION_3="$technical_question_3"
 export HW_GENERIC_FAILURE_MODE="$generic_failure_mode"
 export HW_PRIMARY_USER_GOAL="$primary_user_goal"
 export HW_CONTENT_REVIEW_STATUS_RULE="$content_review_status_rule"
@@ -208,4 +421,4 @@ find AGENTS.md README.md README.zh-CN.md docs -type f -name '*.md' -print0 |
 
 echo "Replaced common HarnessWeaver placeholders."
 echo "Next: run bash scripts/verify.sh --instance."
-echo "When TODO values are resolved, run bash scripts/verify.sh --strict-instance."
+echo "If TODO values remain, resolve them before running bash scripts/verify.sh --strict-instance."

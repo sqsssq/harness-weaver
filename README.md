@@ -21,7 +21,16 @@ HarnessWeaver is not an application framework. It does not choose your frontend 
 bash scripts/verify.sh --template
 ```
 
-7. Optionally initialize common placeholders:
+7. Initialize common placeholders with a config file:
+
+```bash
+cp config/init-project.example.env init-project.env
+# Edit init-project.env, then run:
+bash scripts/init-project.sh --config init-project.env --dry-run
+bash scripts/init-project.sh --config init-project.env
+```
+
+You can also pass the core fields directly:
 
 ```bash
 bash scripts/init-project.sh \
@@ -43,6 +52,9 @@ bash scripts/verify.sh --instance
 bash scripts/verify.sh --strict-instance
 ```
 
+For the recommended editing order, see `docs/harness/06-strict-readiness.md`.
+For project-specific UI and experience standards, fill in `docs/design.md` before product UI work.
+
 ## Template Principle
 
 Keep generic workflow separate from project-specific rules.
@@ -50,7 +62,9 @@ Keep generic workflow separate from project-specific rules.
 - `docs/meta/`: reusable Codex workflow.
 - `docs/harness/`: reusable harness engineering structure.
 - `docs/domain/`: project-specific guardrails.
+- `docs/design.md`: project-specific design standards.
 - `docs/prd/`: project-specific product direction.
+- `config/`: reusable initialization config examples.
 
 ## Verification Modes
 

@@ -48,6 +48,8 @@ docs/tasks/     small implementation tasks
 docs/meta/      reusable AI development workflow
 docs/harness/   harness maturity, sensors, and failure patterns
 docs/domain/    project-specific guardrails
+docs/design.md  project-specific design standards
+config/         initialization config examples
 scripts/        verification entry points
 ```
 
@@ -55,6 +57,7 @@ scripts/        verification entry points
 
 - Keep the MVP focused on `{MVP_FOCUS}`.
 - Keep project-specific quality rules in `docs/domain/PROJECT_RULES.md`.
+- Keep project-specific design standards in `docs/design.md`.
 - Implement one small complete task at a time.
 - Track task status using `docs/tasks/README.md`; do not call work done just because implementation is complete.
 - Every task must have acceptance criteria and a verification method.
@@ -71,10 +74,11 @@ Before implementing a task, the agent must:
 1. Read the relevant task file in `docs/tasks/`.
 2. Read the PRD files referenced by the task.
 3. Read relevant domain rules in `docs/domain/`.
-4. Read relevant harness rules in `docs/harness/`.
-5. Restate the task scope.
-6. Confirm what is out of scope.
-7. Implement the smallest complete slice.
+4. Read relevant design standards in `docs/design.md` when UI or experience is affected.
+5. Read relevant harness rules in `docs/harness/`.
+6. Restate the task scope.
+7. Confirm what is out of scope.
+8. Implement the smallest complete slice.
 
 ## Verification
 
