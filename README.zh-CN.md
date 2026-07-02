@@ -24,10 +24,26 @@ HarnessWeaver 不是应用框架。它不会替你选择前端、后端、数据
 3. 填写 `docs/domain/PROJECT_RULES.md`，定义项目专属规则。
 4. 编写或更新 `docs/prd/`。
 5. 在 `docs/tasks/` 下创建小任务。
-6. 运行验证：
+6. 在模板状态下运行验证：
 
 ```bash
-bash scripts/verify.sh
+bash scripts/verify.sh --template
+```
+
+7. 可选：用初始化脚本替换常见占位符：
+
+```bash
+bash scripts/init-project.sh \
+  --project-name "My Project" \
+  --domain "local productivity tool" \
+  --primary-user "solo operators" \
+  --mvp-focus "capture and review daily notes"
+```
+
+8. 继续手动编辑剩余 `TODO`，然后运行实例验证：
+
+```bash
+bash scripts/verify.sh --instance
 ```
 
 ## 推荐先改哪些文件
@@ -64,6 +80,15 @@ HarnessWeaver 把 harness 分成 5 个阶段。项目不需要一开始完成所
 - `docs/harness/`：通用 harness engineering 结构；
 - `docs/domain/`：项目专属 guardrails；
 - `docs/prd/`：项目专属产品方向。
+
+## 验证模式
+
+HarnessWeaver 区分模板验证和实例验证：
+
+- `bash scripts/verify.sh --template` 允许 `{PROJECT_NAME}` 这类占位符存在。
+- `bash scripts/verify.sh --instance` 如果发现占位符残留就会失败。
+
+两种模式都会检查必需文件、源项目专属词残留、脚本可执行权限和 Markdown 路径引用。
 
 ## 什么时候适合使用
 

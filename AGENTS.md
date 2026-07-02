@@ -49,7 +49,6 @@ docs/meta/      reusable AI development workflow
 docs/harness/   harness maturity, sensors, and failure patterns
 docs/domain/    project-specific guardrails
 scripts/        verification entry points
-templates/      reusable starter files
 ```
 
 ## Working Agreements

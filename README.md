@@ -15,10 +15,26 @@ HarnessWeaver is not an application framework. It does not choose your frontend 
 3. Fill in `docs/domain/PROJECT_RULES.md`.
 4. Draft or update `docs/prd/`.
 5. Create small task files under `docs/tasks/`.
-6. Run:
+6. Run template verification before customization:
 
 ```bash
-bash scripts/verify.sh
+bash scripts/verify.sh --template
+```
+
+7. Optionally initialize common placeholders:
+
+```bash
+bash scripts/init-project.sh \
+  --project-name "My Project" \
+  --domain "local productivity tool" \
+  --primary-user "solo operators" \
+  --mvp-focus "capture and review daily notes"
+```
+
+8. Edit remaining `TODO` values, then run instance verification:
+
+```bash
+bash scripts/verify.sh --instance
 ```
 
 ## Template Principle
@@ -29,6 +45,15 @@ Keep generic workflow separate from project-specific rules.
 - `docs/harness/`: reusable harness engineering structure.
 - `docs/domain/`: project-specific guardrails.
 - `docs/prd/`: project-specific product direction.
+
+## Verification Modes
+
+HarnessWeaver separates template verification from instance verification:
+
+- `bash scripts/verify.sh --template` allows placeholder tokens like `{PROJECT_NAME}`.
+- `bash scripts/verify.sh --instance` fails if placeholder tokens remain.
+
+Both modes check required files, source-project-specific leakage, executable scripts, and Markdown path references.
 
 ## Harness Stages
 

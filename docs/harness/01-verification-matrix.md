@@ -5,8 +5,9 @@
 | Requirement | Evidence |
 | --- | --- |
 | Required files exist | `bash scripts/verify.sh` |
-| Paths are internally consistent | `grep` for referenced paths and manual review |
+| Paths are internally consistent | Markdown path reference check in `scripts/verify.sh` |
 | No source-project-specific terms remain | source-term search |
+| Template placeholders are handled correctly | `--template` allows placeholders; `--instance` rejects them |
 | No product code added during framework-only work | inspect new files and top-level directories |
 | Verify script is executable | `test -x scripts/verify.sh` |
 | Harness stage can be assessed | `docs/harness/05-stage-checklists.md` |

@@ -1,8 +1,43 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+mode="template"
+
+usage() {
+  cat <<'EOF'
+Usage: bash scripts/verify.sh [--template|--instance]
+
+Modes:
+  --template   Verify this repository as a reusable template. Placeholder tokens are allowed.
+  --instance   Verify a copied project instance. Placeholder tokens like {PROJECT_NAME} fail.
+
+Default: --template
+EOF
+}
+
+for arg in "$@"; do
+  case "$arg" in
+    --template)
+      mode="template"
+      ;;
+    --instance)
+      mode="instance"
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown argument: $arg"
+      usage
+      exit 1
+      ;;
+  esac
+done
+
 echo "HarnessWeaver verification"
 echo "=========================="
+echo "Mode: $mode"
 
 required_files=(
   "AGENTS.md"
@@ -40,6 +75,7 @@ required_files=(
   "docs/harness/stages/stage-2-logic.md"
   "docs/harness/stages/stage-3-product-ui.md"
   "docs/harness/stages/stage-4-continuous.md"
+  "scripts/init-project.sh"
 )
 
 missing=0
@@ -57,17 +93,61 @@ fi
 echo "Required template files exist."
 
 source_terms="BioQues[t]|QuestLa[b]|QuestWeave[r]|R[B]M|P[r]oposal Analytic[s]|P[S] recommendation"
-if grep -R -n -E "$source_terms" AGENTS.md README.md docs scripts templates; then
+if grep -R -n -E "$source_terms" AGENTS.md README.md README.zh-CN.md docs scripts; then
   echo "Found source-project-specific terms. Please review the matches above."
   exit 1
 fi
 
 echo "No source-project-specific terms found."
 
-if [[ ! -x "scripts/verify.sh" ]]; then
-  echo "scripts/verify.sh is not executable."
+for executable in scripts/verify.sh scripts/init-project.sh; do
+  if [[ ! -x "$executable" ]]; then
+    echo "$executable is not executable."
+    exit 1
+  fi
+done
+
+echo "Required scripts are executable."
+
+placeholder_pattern='\{[A-Z][A-Z0-9_]*\}'
+if [[ "$mode" == "instance" ]]; then
+  if grep -R -n -E "$placeholder_pattern" AGENTS.md README.md README.zh-CN.md docs; then
+    echo "Instance mode does not allow unresolved placeholder tokens."
+    exit 1
+  fi
+  echo "No unresolved placeholder tokens found."
+else
+  placeholder_count=$(grep -R -h -E -o "$placeholder_pattern" AGENTS.md README.md README.zh-CN.md docs | wc -l | tr -d ' ')
+  echo "Template placeholder tokens allowed: $placeholder_count found."
+fi
+
+path_failed=0
+while IFS= read -r ref; do
+  [[ -z "$ref" ]] && continue
+  [[ "$ref" == *"..."* ]] && continue
+  [[ "$ref" == *"*"* ]] && continue
+  [[ "$ref" == *"{"* ]] && continue
+  if [[ "$ref" == */ ]]; then
+    if [[ ! -d "${ref%/}" ]]; then
+      echo "Referenced directory does not exist: $ref"
+      path_failed=1
+    fi
+  else
+    if [[ ! -e "$ref" ]]; then
+      echo "Referenced file does not exist: $ref"
+      path_failed=1
+    fi
+  fi
+done < <(
+  grep -R -h -E -o '`(AGENTS\.md|README[^`]*\.md|docs/[^`]+|scripts/[^`]+)`' AGENTS.md README.md README.zh-CN.md docs |
+    sed 's/^`//; s/`$//' |
+    sort -u
+)
+
+if [[ "$path_failed" -ne 0 ]]; then
+  echo "Markdown path reference check failed."
   exit 1
 fi
 
-echo "scripts/verify.sh is executable."
-echo "Template verification passed."
+echo "Markdown path references are valid."
+echo "HarnessWeaver $mode verification passed."

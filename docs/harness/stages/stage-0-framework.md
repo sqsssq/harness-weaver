@@ -24,6 +24,7 @@ Start Stage 0 when:
 - `docs/harness/`
 - `docs/domain/PROJECT_RULES.md`
 - `scripts/verify.sh`
+- `scripts/init-project.sh`
 
 ## Completion Checklist
 
@@ -34,6 +35,9 @@ Start Stage 0 when:
 - [ ] Harness docs define failure patterns, architecture rules, quality rules, stage checklists, and stage gates.
 - [ ] Domain rules define project-specific guardrails.
 - [ ] `scripts/verify.sh` runs successfully.
+- [ ] `bash scripts/verify.sh --template` passes before customization.
+- [ ] `bash scripts/verify.sh --instance` passes after customization.
+- [ ] Markdown path references resolve to existing files or directories.
 - [ ] No source-project-specific assumptions remain after customization.
 
 ## Verification Command
