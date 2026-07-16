@@ -1,10 +1,10 @@
 <div align="center">
-
+![HarnessWeaver workflow hero](docs/assets/harnessweaver-hero.png)
 # HarnessWeaver
 
 🇺🇸 English | [🇨🇳 简体中文](README.zh-CN.md)
 
-![HarnessWeaver workflow hero](docs/assets/harnessweaver-hero.png)
+
 
 **Bootstrap a structured harness for AI-assisted development.**
 
